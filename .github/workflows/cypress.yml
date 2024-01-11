@@ -30,5 +30,5 @@ jobs:
 
       - name: Run end-to-end tests
         id: e2eTests
-        run: pnpm run test
+        run: pnpm i && pnpm run test
         working-directory: ./end-to-end-tests
