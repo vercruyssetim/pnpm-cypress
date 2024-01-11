@@ -25,7 +25,7 @@ jobs:
       - name: Cache cypress binary
         uses: actions/cache@v3
         with:
-          path: '~/runner/.cache/Cypress'
+          path: '~/.cache/Cypress'
           key: cypress-binary
 
       - name: install-node
