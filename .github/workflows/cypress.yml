@@ -34,14 +34,11 @@ jobs:
           restore-keys: |
             node-cache-${{ runner.os }}-pnpm
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-          cache-dependency-path: '**/pnpm-lock.yaml'
-
       - name: Run end-to-end tests
         id: e2eTests
-        run: pnpm i && pnpm run test
-        working-directory: ./end-to-end-tests
+        uses: cypress-io/github-action@v4
+        with:
+          install: false
+          working-directory: ./end-to-end-tests
+          spec: |
+            cypress/e2e/**/*.spec.ts
