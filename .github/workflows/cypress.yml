@@ -22,19 +22,14 @@ jobs:
         with:
           version: ^8.14.0
 
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
+      - name: install-node
+        uses: actions/setup-node@v4
         with:
-          path: ${{ env.STORE_PATH }}
-          key: node-cache-${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            node-cache-${{ runner.os }}-pnpm
+          node-version: 20
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
 
       - name: Run end-to-end tests
         id: e2eTests
-        run: pnpm i && pnpm run test
+        run: pnpm i && pnpm run install:cypress && pnpm run test
         working-directory: ./end-to-end-tests
