@@ -36,5 +36,5 @@ jobs:
 
       - name: Run end-to-end tests
         id: e2eTests
-        run: pnpm i && pnpm run install:cypress && pnpm run test
+        run: pnpm i && pnpm run test
         working-directory: ./end-to-end-tests
