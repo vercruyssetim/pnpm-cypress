@@ -22,19 +22,28 @@ jobs:
         with:
           version: ^8.14.0
 
-      - name: Cache cypress binary
-        uses: actions/cache@v3
-        with:
-          path: '~/.cache/Cypress'
-          key: cypress-binary
-
       - name: install-node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
 
+      - name: pnpm install
+        run: pnpm i
+
+      - name: Cache cypress binary
+        uses: actions/cache@v3
+        with:
+          path: '~/.cache/Cypress'
+          key: cypress-binary-{{hashFiles(./pnpm-lock.yaml)}}
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: Install cypress
+        working-directory: ./end-to-end-tests
+        continue-on-error: true
+        run: npm run install:cypress
+
       - name: Run end-to-end tests
         id: e2eTests
-        run: pnpm i && pnpm run test
+        run: pnpm run test
         working-directory: ./end-to-end-tests
