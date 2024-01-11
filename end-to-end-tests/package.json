@@ -1,0 +1,11 @@
+{
+  "name": "end-to-end-tests",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "cypress run"
+  },
+  "dependencies": {
+    "cypress": "^13.6.2",
+    "typescript": "^5.3.3"
+  }
+}
