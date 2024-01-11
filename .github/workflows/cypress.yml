@@ -31,12 +31,18 @@ jobs:
       - name: pnpm install
         run: pnpm i
 
+      - name: Determine latest version
+        id: cypress-version
+        working-directory: ./end-to-end-tests
+        run: |
+          echo "version=$(pnpm show cypress version)" >> "$GITHUB_OUTPUT"
+
       - name: Cache cypress binary
         id: cache-cypress
         uses: actions/cache@v3
         with:
           path: '~/.cache/Cypress'
-          key: cypress-binary-${{ hashFiles('pnpm-lock.yaml') }}
+          key: cypress-binary-${{ steps.cypress-version.outputs.version }}
 
       - if: ${{ steps.cache-cypress.outputs.cache-hit != 'true' }}
         name: Install cypress
