@@ -32,12 +32,13 @@ jobs:
         run: pnpm i
 
       - name: Cache cypress binary
+        id: cache-cypress
         uses: actions/cache@v3
         with:
           path: '~/.cache/Cypress'
           key: cypress-binary-{{hashFiles(./pnpm-lock.yaml)}}
 
-      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+      - if: ${{ steps.cache-cypress.outputs.cache-hit != 'true' }}
         name: Install cypress
         working-directory: ./end-to-end-tests
         continue-on-error: true
