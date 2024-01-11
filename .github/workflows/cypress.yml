@@ -22,6 +22,12 @@ jobs:
         with:
           version: ^8.14.0
 
+      - name: Cache cypress binary
+        uses: actions/cache@v3
+        with:
+          path: '~/runner/.cache/Cypress'
+          key: cypress-binary
+
       - name: install-node
         uses: actions/setup-node@v4
         with:
@@ -30,5 +36,5 @@ jobs:
 
       - name: Run end-to-end tests
         id: e2eTests
-        run: pnpm i && pnpm run install:cypress && pnpm run test
+        run: pnpm i && pnpm run test
         working-directory: ./end-to-end-tests
