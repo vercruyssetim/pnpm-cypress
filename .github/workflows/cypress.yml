@@ -36,9 +36,5 @@ jobs:
 
       - name: Run end-to-end tests
         id: e2eTests
-        uses: cypress-io/github-action@v4
-        with:
-          install: false
-          working-directory: ./end-to-end-tests
-          spec: |
-            cypress/e2e/**/*.spec.ts
+        run: pnpm i && pnpm run test
+        working-directory: ./end-to-end-tests
